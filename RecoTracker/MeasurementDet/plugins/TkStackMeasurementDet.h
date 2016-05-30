@@ -27,6 +27,12 @@ public:
 
   const TkPhase2OTMeasurementDet* lowerDet() const { return theInnerDet; }
   const TkPhase2OTMeasurementDet* upperDet() const { return theOuterDet; }
+  const StackGeomDet& specificGeomDet() const {return static_cast<StackGeomDet const&>(fastGeomDet());}
+
+  bool measurements( const TrajectoryStateOnSurface& stateOnThisDet,
+			     const MeasurementEstimator& est, const MeasurementTrackerEvent & data,
+			     TempMeasurements & result) const override;
+
 
   /// return TRUE if both lower and upper components are active
   bool isActive(const MeasurementTrackerEvent& data) const override {
