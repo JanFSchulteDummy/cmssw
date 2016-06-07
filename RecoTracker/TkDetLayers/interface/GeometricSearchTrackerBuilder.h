@@ -17,14 +17,9 @@ public:
   ~GeometricSearchTrackerBuilder() {}
 
   GeometricSearchTracker* build(const GeometricDet* theGeometricTracker,
-<<<<<<< HEAD
-                                const TrackerGeometry* theGeomDetGeometry,
-                                const TrackerTopology* tTopo) __attribute__((cold));
-=======
 				const TrackerGeometry* theGeomDetGeometry,
 				const TrackerTopology* tTopo,
 				const bool usePhase2Stacks = false) __attribute__ ((cold));
->>>>>>> use stacks set in cfg file
 };
 
 #endif

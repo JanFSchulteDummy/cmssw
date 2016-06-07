@@ -267,33 +267,21 @@ void Phase2OTBarrelRod::searchNeighbors(const TrajectoryStateOnSurface& tsos,
   }
 
   typedef CompatibleDetToGroupAdder Adder;
-<<<<<<< HEAD
   for (int idet = negStartIndex; idet >= 0; idet--) {
     if (!overlap(gCrossingPos, *sRod[idet], window))
       break;
     if (!Adder::add(*sRod[idet], tsos, prop, est, result))
       break;
-=======
-  for (int idet=negStartIndex; idet >= 0; idet--) {
-    if (!overlap( gCrossingPos, *sRod[idet], window)) break;
-    if (!Adder::add( *sRod[idet], tsos, prop, est, result)) break;
     if(theInnerDetBrothers.empty() && theOuterDetBrothers.empty()) break;
->>>>>>> building stacks or single sub-modules at the end of the trk geom navigation
     // If the two above checks are passed also the brother module will be added with no further checks
     Adder::add(*sBrotherRod[idet], tsos, prop, est, brotherresult);
   }
-<<<<<<< HEAD
   for (int idet = posStartIndex; idet < static_cast<int>(sRod.size()); idet++) {
     if (!overlap(gCrossingPos, *sRod[idet], window))
       break;
     if (!Adder::add(*sRod[idet], tsos, prop, est, result))
       break;
-=======
-  for (int idet=posStartIndex; idet < static_cast<int>(sRod.size()); idet++) {
-    if (!overlap( gCrossingPos, *sRod[idet], window)) break;
-    if (!Adder::add( *sRod[idet], tsos, prop, est, result)) break;
     if(theInnerDetBrothers.empty() && theOuterDetBrothers.empty()) break;
->>>>>>> building stacks or single sub-modules at the end of the trk geom navigation
     // If the two above checks are passed also the brother module will be added with no further checks
     Adder::add(*sBrotherRod[idet], tsos, prop, est, brotherresult);
   }
