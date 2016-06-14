@@ -257,7 +257,7 @@ void TrackerGeomBuilderFromGeometricDet::buildGeomDet(TrackerGeometry* tracker) 
 
       } else if (gduTypeName.find("Lower") != std::string::npos) {
         //FIXME::ERICA: the plane builder is built in the middle...
-        PlaneBuilderForGluedDet::ResultType plane = gluedplaneBuilder.plane(composed);
+        Plane* plane = new Plane(dus->surface());
         composedDetId = theTopo->stack(gduId[i]);
         StackGeomDet* stackDet = new StackGeomDet(&(*plane), dum, dus, composedDetId);
         tracker->addDet((GeomDet*)stackDet);
