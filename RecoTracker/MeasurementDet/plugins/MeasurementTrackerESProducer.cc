@@ -47,6 +47,16 @@ private:
   edm::ESGetToken<SiPixelQuality, SiPixelQualityRcd> pixelQualityToken_;
   edm::ESGetToken<SiPixelFedCablingMap, SiPixelFedCablingMapRcd> pixelCablingToken_;
   edm::ESGetToken<SiStripQuality, SiStripQualityRcd> stripQualityToken_;
+  //FIXME:: just temporary solution for phase2!
+  phase2matcherName = "";
+  if (p.existsAs<std::string>("Phase2HitMatcher")) {
+    phase2matcherName = p.getParameter<std::string>("Phase2HitMatcher");
+  }
+
+  phase2TrackerCPEName = "";
+  if (p.existsAs<std::string>("Phase2StripCPE")) {
+    phase2TrackerCPEName = p.getParameter<std::string>("Phase2StripCPE");
+  }
 
   edm::ESGetToken<PixelClusterParameterEstimator, TkPixelCPERecord> pixelCPEToken_;
   edm::ESGetToken<StripClusterParameterEstimator, TkStripCPERecord> stripCPEToken_;
@@ -221,6 +231,7 @@ std::unique_ptr<MeasurementTracker> MeasurementTrackerESProducer::produce(const 
 							          pixelCPE.product(),
 							          stripCPE.product(),
 							          hitMatcher.product(),
+							          ph2hitMatcher.product(),
 							          trackerTopology.product(),
 							          trackerGeom.product(),
 							          geometricSearchTracker.product(),

@@ -426,8 +426,8 @@ private:
   friend class MeasurementTrackerImpl;
 
   // Globals (not-per-event)
-  const ClusterParameterEstimator<Phase2TrackerCluster1D>* theCPE;
   const VectorHitBuilderEDProducer* thePhase2Matcher;
+  const ClusterParameterEstimator<Phase2TrackerCluster1D>* theCPE;
   
   // Locals, per-event
   std::vector<unsigned int> id_;
