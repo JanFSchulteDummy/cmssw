@@ -16,7 +16,7 @@ public:
   Phase2OTBarrelRodBuilder(){};
   Phase2OTBarrelRod* build(const GeometricDet* thePhase2OTBarrelRod,
 			   const TrackerGeometry* theGeomDetGeometry,
-			   const bool usePhase2Stacks = false) __attribute__ ((cold));
+			   const bool useBrothers = true) __attribute__ ((cold));
 
   
 };
