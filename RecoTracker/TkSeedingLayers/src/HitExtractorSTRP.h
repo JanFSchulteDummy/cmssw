@@ -8,6 +8,7 @@
 #include "DataFormats/TrackerRecHit2D/interface/SiStripRecHit2D.h"
 #include "DataFormats/TrackerRecHit2D/interface/SiStripMatchedRecHit2DCollection.h"
 #include "DataFormats/TrackerRecHit2D/interface/SiStripRecHit2DCollection.h"
+#include "DataFormats/TrackerRecHit2D/interface/VectorHit.h"
 
 #include <vector>
 #include <tuple>
@@ -43,6 +44,11 @@ namespace ctfseeding {
     void useStereoHits(const edm::InputTag& m, edm::ConsumesCollector& iC) {
       hasStereoHits = true;
       theStereoHits = iC.consumes<SiStripRecHit2DCollection>(m);
+    }
+
+    void useVectorHits(const edm::InputTag & m, edm::ConsumesCollector& iC) { 
+      hasVectorHits = true; 
+      theVectorHits = iC.consumes<VectorHitCollectionNew>(m); 
     }
     void useRingSelector(int minRing, int maxRing);
     void useSimpleRphiHitsCleaner(bool use) { hasSimpleRphiHitsCleaner = use; }
@@ -84,9 +90,11 @@ namespace ctfseeding {
     edm::EDGetTokenT<SiStripMatchedRecHit2DCollection> theMatchedHits;
     edm::EDGetTokenT<SiStripRecHit2DCollection> theRPhiHits;
     edm::EDGetTokenT<SiStripRecHit2DCollection> theStereoHits;
+    edm::EDGetTokenT<VectorHitCollectionNew> theVectorHits;
     bool hasMatchedHits;
     bool hasRPhiHits;
     bool hasStereoHits;
+    bool hasVectorHits;
     bool hasRingSelector;
     bool hasSimpleRphiHitsCleaner;
     bool failProjection;

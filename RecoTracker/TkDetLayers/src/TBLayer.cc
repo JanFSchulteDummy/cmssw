@@ -1,4 +1,5 @@
 #include "TBLayer.h"
+#include "FWCore/MessageLogger/interface/MessageLogger.h"
 
 #include "LayerCrossingSide.h"
 #include "DetGroupMerger.h"
@@ -21,6 +22,19 @@ void TBLayer::groupedCompatibleDetsV(const TrajectoryStateOnSurface& tsos,
   if (!crossings.isValid())
     return;
 
+void 
+TBLayer::groupedCompatibleDetsV( const TrajectoryStateOnSurface& tsos,
+				 const Propagator& prop,
+				 const MeasurementEstimator& est,
+				 std::vector<DetGroup> & result) const {
+  LogDebug("TBLayer") << "TBLayer::groupedCompatibleDetsV" ;
+  SubLayerCrossings  crossings; 
+  crossings = computeCrossings( tsos, prop.propagationDirection());
+  if(crossings.isValid()) LogDebug("TBLayer") << "crossing is valid" ;
+  else LogDebug("TBLayer") << "crossing is invalid" ;
+
+  if(! crossings.isValid()) return;
+  
   std::vector<DetGroup> closestResult;
   addClosest(tsos, prop, est, crossings.closest(), closestResult);
   // for TIB this differs from compatibleDets logic, which checks next in such cases!!!
@@ -61,6 +75,7 @@ SubLayerCrossings TBLayer::computeCrossings(const TrajectoryStateOnSurface& star
 
   GlobalPoint gInnerPoint(innerCrossing.position());
   GlobalPoint gOuterPoint(outerCrossing.position());
+
 
   int innerIndex, outerIndex;
   bool inLess;
