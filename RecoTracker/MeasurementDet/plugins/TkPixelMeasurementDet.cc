@@ -126,6 +126,7 @@ TkPixelMeasurementDet::RecHitContainer TkPixelMeasurementDet::compHits(const Tra
                                      << index << " >= " << data.pixelClustersToSkip().size();
       return result;
     }
+<<<<<<< HEAD
 
     if (ci->maxPixelRow() < xminus)
       continue;
@@ -142,6 +143,26 @@ TkPixelMeasurementDet::RecHitContainer TkPixelMeasurementDet::compHits(const Tra
       LogDebug("TkPixelMeasurementDet") << "skipping this cluster from last iteration on "
                                         << fastGeomDet().geographicalId().rawId() << " key: " << index;
     }
+=======
+     unsigned int index = ci-begin;
+     if (!data.pixelClustersToSkip().empty() &&  index>=data.pixelClustersToSkip().size()){
+       edm::LogError("IndexMisMatch")<<"TkPixelMeasurementDet cannot create hit because of index mismatch. i.e "<<index<<" >= "<<data.pixelClustersToSkip().size();
+       return result;
+     }
+
+     if (ci->maxPixelRow()<xminus) continue;
+     // also check compatibility in y... (does not add much)
+     if (ci->minPixelCol()>yplus) continue;
+     if (ci->maxPixelCol()<yminus) continue;
+
+     if(data.pixelClustersToSkip().empty() or (not data.pixelClustersToSkip()[index]) ) {
+       SiPixelClusterRef cluster = detSet.makeRefTo( data.pixelData().handle(), ci );
+       result.push_back( buildRecHit( cluster, ts.localParameters() ) );
+       LogTrace("MeasurementTracker") << "TkPixelMeasurementDet::rechits adding PixelHits in detId " << fastGeomDet().geographicalId().rawId() << std::endl;
+     }else{   
+       LogDebug("TkPixelMeasurementDet")<<"skipping this cluster from last iteration on "<<fastGeomDet().geographicalId().rawId()<<" key: "<<index;
+     }
+>>>>>>> maxChi2, minimumNumberOfHits & maxLostHits modified
   }
   return result;
 }
