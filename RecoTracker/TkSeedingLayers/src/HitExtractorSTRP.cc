@@ -217,6 +217,15 @@ HitExtractor::Hits HitExtractorSTRP::hits(const TkTransientTrackingRecHitBuilder
       if (skipClusters)
         cleanedOfClusters(ttrhBuilder, ev, result, false, cleanFrom);
     }
+    if (hasVectorHits) {
+      LogError("HitExtractorSTRP")<<"TIB is not supposed to be in Phase2 TRK detector configuration. What follows have never been checked before! ";
+      edm::Handle<VectorHitCollectionNew> vectorHits;
+      ev.getByToken( theVectorHits, vectorHits);
+      if (skipClusters) cleanFrom=result.size();
+        range2SeedingHits( *vectorHits, result, tTopo->tibDetIdLayerComparator(theIdLayer));
+        if (skipClusters) cleanedOfClusters(ttrhBuilder, ev,result,false,cleanFrom);
+    }
+      
   }
 
   //
@@ -282,7 +291,14 @@ HitExtractor::Hits HitExtractorSTRP::hits(const TkTransientTrackingRecHitBuilder
       ev.getByToken( theVectorHits, vectorHits);
       //FIXME: check the skipClusters with VHits
       if (skipClusters) cleanFrom=result.size();
-      range2SeedingHits( *vectorHits, result, tTopo->tobDetIdLayerComparator(theIdLayer));
+      auto getter = tTopo->tidDetIdWheelComparator(theSide,theIdLayer);
+      VectorHitCollection::Range range = vectorHits->equal_range(getter.first, getter.second);
+      for (VectorHitCollection::const_iterator it = range.first; it != range.second; ++it) {
+        int ring = tTopo->tidRing( it->detId() );  if (!ringRange(ring)) continue;
+        for (VectorHitCollection::DetSet::const_iterator hit = it->begin(), end = it->end(); hit != end; ++hit) {
+          result.emplace_back(*hit);
+        }
+      }
       if (skipClusters) cleanedOfClusters(ttrhBuilder, ev,result,false,cleanFrom);
     }
   }
@@ -411,6 +427,23 @@ HitExtractor::Hits HitExtractorSTRP::hits(const TkTransientTrackingRecHitBuilder
       }
       if (skipClusters)
         cleanedOfClusters(ttrhBuilder, ev, result, false, cleanFrom);
+    }
+
+    if (hasVectorHits) {
+      LogError("HitExtractorSTRP")<<"TEC is not supposed to be in Phase2 TRK detector configuration. What follows have never been checked before! ";
+      edm::Handle<VectorHitCollectionNew> vectorHits;
+      ev.getByToken( theVectorHits, vectorHits);
+      if (skipClusters) cleanFrom=result.size();
+      auto getter = tTopo->tidDetIdWheelComparator(theSide,theIdLayer);
+      VectorHitCollection::Range range = vectorHits->equal_range(getter.first, getter.second);
+      for (VectorHitCollection::const_iterator it = range.first; it != range.second; ++it) {
+        int ring = tTopo->tidRing( it->detId() );  if (!ringRange(ring)) continue;
+        for (VectorHitCollection::DetSet::const_iterator hit = it->begin(), end = it->end(); hit != end; ++hit) {
+          result.emplace_back(*hit);
+        }
+      }
+
+      if (skipClusters) cleanedOfClusters(ttrhBuilder, ev,result,false,cleanFrom);
     }
   }
 
