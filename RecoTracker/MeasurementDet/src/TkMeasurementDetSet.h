@@ -6,7 +6,7 @@ class TkStripMeasurementDet;
 class TkStripMeasurementDet;
 class TkPixelMeasurementDet;
 class SiStripRecHitMatcher;
-class VectorHitBuilderEDProducer;
+//class VectorHitBuilderEDProducer;
 class StripClusterParameterEstimator;
 class PixelClusterParameterEstimator;
 class Phase2StripCPE;
@@ -20,6 +20,9 @@ class Phase2StripCPE;
 
 #include "CondFormats/SiStripObjects/interface/SiStripBadStrip.h"
 #include "CalibFormats/SiStripObjects/interface/SiStripQuality.h"
+
+#include "FWCore/ParameterSet/interface/ParameterSet.h"
+#include "RecoLocalTracker/SiPhase2VectorHitBuilder/interface/VectorHitBuilderEDProducer.h"
 
 #include <unordered_map>
 

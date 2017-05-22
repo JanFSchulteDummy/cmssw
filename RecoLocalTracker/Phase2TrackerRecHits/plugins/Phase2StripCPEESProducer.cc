@@ -8,7 +8,7 @@
 #include "MagneticField/Engine/interface/MagneticField.h"
 #include "MagneticField/Records/interface/IdealMagneticFieldRecord.h"
 
-#include "RecoLocalTracker/Records/interface/TkStripCPERecord.h"
+#include "RecoLocalTracker/Records/interface/TkPhase2OTCPERecord.h"
 #include "RecoLocalTracker/ClusterParameterEstimator/interface/ClusterParameterEstimator.h"
 #include "RecoLocalTracker/Phase2TrackerRecHits/interface/Phase2StripCPE.h"
 #include "RecoLocalTracker/Phase2TrackerRecHits/interface/Phase2StripCPEGeometric.h"
