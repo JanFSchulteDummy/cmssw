@@ -77,6 +77,7 @@ TkStackMeasurementDet::RecHitContainer TkStackMeasurementDet::recHits(const Traj
         //ERICA:I would have prefer to keep buildVectorHits ...
         VectorHit vh = algo->buildVectorHit( &specificGeomDet(), clusterLower, clusterUpper);
         LogTrace("MeasurementTracker") << "TkStackMeasurementDet::rechits adding VectorHits!" << std::endl;
+        LogTrace("MeasurementTracker") << vh << std::endl;
         result.push_back( std::make_shared<VectorHit>( vh ));
       }
     }
