@@ -837,12 +837,17 @@ double QuickTrackAssociatorByHitsImpl::weightedNumberOfTrackClusters(const Traje
   double sum = 0.0;
   for (auto iHit = seed.recHits().first; iHit != seed.recHits().second; ++iHit) {
     const auto subdetId = track_associator::getHitFromIter(iHit)->geographicalId().subdetId();
-    const double weight = (subdetId == PixelSubdetector::PixelBarrel || subdetId == PixelSubdetector::PixelEndcap)
-                              ? pixelHitWeight_
-                              : 1.0;
-    sum += weight;
+    const double weight = (subdetId == PixelSubdetector::PixelBarrel || subdetId == PixelSubdetector::PixelEndcap) ?  pixelHitWeight_ : 1.0;
+    LogTrace("QuickTrackAssociatorByHitsImpl") << "  detId: " << getHitFromIter(iRecHit)->geographicalId().rawId();
+    LogTrace("QuickTrackAssociatorByHitsImpl") << "  weight: " << weight;
+    std::vector < OmniClusterRef > oClusters=getMatchedClusters( iRecHit, iRecHit + 1 );  //only for the cluster being checked
+    for( std::vector<OmniClusterRef>::const_iterator it=oClusters.begin(); it != oClusters.end(); ++it ) {
+      weightedClusters += weight;
+    }
   }
-  return sum;
+  LogTrace("QuickTrackAssociatorByHitsImpl") << "  total weighted clusters: " << weightedClusters;
+
+  return weightedClusters;
 }
 
 // count clusters
