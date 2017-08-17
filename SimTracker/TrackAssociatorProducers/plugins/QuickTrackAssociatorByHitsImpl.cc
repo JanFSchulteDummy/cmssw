@@ -480,11 +480,11 @@ QuickTrackAssociatorByHitsImpl::getAllSimTrackIdentifiers(const TrackerHitAssoci
   return returnValue;
 }
 
-=======
 template<typename iter> std::vector<OmniClusterRef> QuickTrackAssociatorByHitsImpl::getMatchedClusters(iter begin, iter end) const
 {
   std::vector<OmniClusterRef> returnValue;
   for (iter iRecHit = begin; iRecHit != end; ++iRecHit) {
+    LogTrace("QuickTrackAssociator") << "  detId: " << getHitFromIter(iRecHit)->geographicalId().rawId();
     const TrackingRecHit* rhit = getHitFromIter(iRecHit);
     if (rhit->isValid()) {
       int subdetid = rhit->geographicalId().subdetId();
@@ -796,7 +796,6 @@ reco::SimToRecoCollectionSeed QuickTrackAssociatorByHitsImpl::associateSimToReco
         // hits in the tracker.
         numberOfSimulatedHits = trackingParticleRef->numberOfTrackerHits();
       }
-
       double purity = numberOfSharedClusters / numberOfValidTrackClusters;
       double quality;
       if (absoluteNumberOfHits_)
@@ -878,7 +877,7 @@ double QuickTrackAssociatorByHitsImpl::weightedNumberOfTrackClusters(iter begin,
       weightedClusters += weight;
     }
   }
-  LogTrace("QuickTrackAssociatorByHitsImpl") << "  total weighted clusters: " << weightedClusters;
 
+  LogTrace("QuickTrackAssociator") << "  total clusters: " << weightedClusters;
   return weightedClusters;
 }
