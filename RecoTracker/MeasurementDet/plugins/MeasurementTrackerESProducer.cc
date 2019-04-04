@@ -209,7 +209,6 @@ std::unique_ptr<MeasurementTracker> MeasurementTrackerESProducer::produce(const 
 
 
   if(phase2TrackerCPEName != ""){
-<<<<<<< HEAD
       iRecord.getRecord<TkPhase2OTCPERecord>().get(phase2TrackerCPEName,phase2TrackerCPE);
       return             std::make_unique<MeasurementTrackerImpl>(pset_,
 							          pixelCPE.product(),

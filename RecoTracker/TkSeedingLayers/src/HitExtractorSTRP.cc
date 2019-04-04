@@ -297,7 +297,7 @@ HitExtractor::Hits HitExtractorSTRP::hits(const TkTransientTrackingRecHitBuilder
       ev.getByToken( theVectorHits, vectorHits);
       //FIXME: check the skipClusters with VHits
       if (skipClusters) cleanFrom=result.size();
-      auto getter = tTopo->tidDetIdWheelComparator(theSide,theIdLayer);
+      auto getter = tTopo->tidDetIdWheelComparator(static_cast<unsigned int>(theSide),theIdLayer);
       VectorHitCollection::Range range = vectorHits->equal_range(getter.first, getter.second);
       for (VectorHitCollection::const_iterator it = range.first; it != range.second; ++it) {
         int ring = tTopo->tidRing( it->detId() );  if (!ringRange(ring)) continue;
@@ -441,7 +441,7 @@ HitExtractor::Hits HitExtractorSTRP::hits(const TkTransientTrackingRecHitBuilder
       edm::Handle<VectorHitCollectionNew> vectorHits;
       ev.getByToken( theVectorHits, vectorHits);
       if (skipClusters) cleanFrom=result.size();
-      auto getter = tTopo->tidDetIdWheelComparator(theSide,theIdLayer);
+      auto getter = tTopo->tidDetIdWheelComparator(static_cast<unsigned int>(theSide),theIdLayer);
       VectorHitCollection::Range range = vectorHits->equal_range(getter.first, getter.second);
       for (VectorHitCollection::const_iterator it = range.first; it != range.second; ++it) {
         int ring = tTopo->tidRing( it->detId() );  if (!ringRange(ring)) continue;
@@ -453,7 +453,8 @@ HitExtractor::Hits HitExtractorSTRP::hits(const TkTransientTrackingRecHitBuilder
       if (skipClusters) cleanedOfClusters(ttrhBuilder, ev,result,false,cleanFrom);
     }
   }
-
+  }
   LogDebug("HitExtractorSTRP")<<" giving: "<<result.size()<<" out for charge cut " << minGoodCharge;
   return result;
+  
 }

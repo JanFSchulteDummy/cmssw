@@ -48,28 +48,17 @@ public:
   virtual OmniClusterRef const& firstClusterRef() const = 0;
 
   // verify that hits can share clusters...
-  inline bool sameDetModule(TrackingRecHit const& hit) const;
+  inline bool sameDetModule(TrackingRecHit const & hit) const;
 
-  virtual bool hasPositionAndError() const;
+  bool hasPositionAndError() const ; 
 
-  virtual LocalPoint localPosition() const {
-    check();
-    return pos_;
-  }
+  virtual LocalPoint localPosition() const   { check(); return pos_;}
 
-  virtual LocalError localPositionError() const {
-    check();
-    return err_;
-  }
+  virtual LocalError localPositionError() const   { check(); return err_;}
+ 
+  const LocalPoint & localPositionFast()      const { check(); return pos_; }
+  const LocalError & localPositionErrorFast() const { check(); return err_; }
 
-  const LocalPoint& localPositionFast() const {
-    check();
-    return pos_;
-  }
-  const LocalError& localPositionErrorFast() const {
-    check();
-    return err_;
-  }
 
   // to be specialized for 1D and 2D
   void getKfComponents(KfComponentsHolder& holder) const override = 0;
