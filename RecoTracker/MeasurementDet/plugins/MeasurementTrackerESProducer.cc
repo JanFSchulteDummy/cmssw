@@ -17,6 +17,7 @@
 #include "RecoTracker/MeasurementDet/interface/MeasurementTracker.h"
 
 #include "RecoLocalTracker/Records/interface/TrackerCPERecord.h"
+#include "RecoLocalTracker/Records/interface/TkPhase2OTCPERecord.h"
 #include "Geometry/Records/interface/TrackerDigiGeometryRecord.h"
 #include "RecoTracker/Record/interface/TrackerRecoGeometryRecord.h"
 
@@ -54,7 +55,7 @@ private:
   edm::ESGetToken<TrackerTopology, TrackerTopologyRcd> trackerTopologyToken_;
   edm::ESGetToken<TrackerGeometry, TrackerDigiGeometryRecord> trackerGeomToken_;
   edm::ESGetToken<GeometricSearchTracker, TrackerRecoGeometryRecord> geometricSearchTrackerToken_;
-  edm::ESGetToken<ClusterParameterEstimator<Phase2TrackerCluster1D>, TkStripCPERecord> phase2TrackerCPEToken_;
+  edm::ESGetToken<ClusterParameterEstimator<Phase2TrackerCluster1D>, TkPhase2OTCPERecord> phase2TrackerCPEToken_;
   edm::ESGetToken<VectorHitBuilderEDProducer, TkPhase2OTCPERecord> phase2matcherToken_;
 
   MeasurementTrackerImpl::BadStripCutsDet badStripCuts_;
@@ -218,6 +219,7 @@ void MeasurementTrackerESProducer::fillDescriptions(edm::ConfigurationDescriptio
   desc.add<std::string>("HitMatcher", "StandardMatcher");
 
   desc.add<std::string>("Phase2StripCPE", "")->setComment("empty string used to turn off Phase 2");
+  desc.add<std::string>("Phase2HitMatcher", "");
 
   desc.add<std::string>("SiStripQualityLabel", "");
   desc.add<bool>("UseStripModuleQualityDB", true);

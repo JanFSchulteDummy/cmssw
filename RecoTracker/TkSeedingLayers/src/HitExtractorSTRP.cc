@@ -184,6 +184,7 @@ HitExtractor::Hits HitExtractorSTRP::hits(const TkTransientTrackingRecHitBuilder
   //
   // TIB
   //
+  std::cout << theLayerSubDet << std::endl;
   if (theLayerSubDet == GeomDetEnumerators::TIB) {
     LogTrace("HitExtractorSTRP")<<"Getting hits into the TIB";
     if (hasMatchedHits) {

@@ -33,7 +33,9 @@ private:
 
 using namespace edm;
 
-TrackerRecoGeometryESProducer::TrackerRecoGeometryESProducer(const edm::ParameterSet &p) {
+TrackerRecoGeometryESProducer::TrackerRecoGeometryESProducer(const edm::ParameterSet &p) 
+   : _usePhase2Stacks(p.getParameter<bool>("usePhase2Stacks"))
+{
   auto c = setWhatProduced(this);
 
   // 08-Oct-2007 - Patrick Janot
@@ -44,7 +46,7 @@ TrackerRecoGeometryESProducer::TrackerRecoGeometryESProducer(const edm::Paramete
   // See FastSimulation/Configuration/data/ for examples of cfi's.
   c.setConsumes(geomToken_, edm::ESInputTag("", p.getUntrackedParameter<std::string>("trackerGeometryLabel")));
   c.setConsumes(tTopToken_);
-  _usePhase2Stacks = p.getParameter<bool>("usePhase2Stacks");
+  //_usePhase2Stacks = p.getParameter<bool>("usePhase2Stacks");
 }
 std::unique_ptr<GeometricSearchTracker> TrackerRecoGeometryESProducer::produce(
     const TrackerRecoGeometryRecord &iRecord) {
@@ -57,6 +59,7 @@ std::unique_ptr<GeometricSearchTracker> TrackerRecoGeometryESProducer::produce(
 void TrackerRecoGeometryESProducer::fillDescriptions(edm::ConfigurationDescriptions &descriptions) {
   edm::ParameterSetDescription desc;
 
+  desc.add<bool>("usePhase2Stacks");
   desc.addUntracked<std::string>("trackerGeometryLabel", "");
   descriptions.addDefault(desc);
 }
