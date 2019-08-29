@@ -26,8 +26,8 @@ namespace {
 
 Phase2OTBarrelRod::Phase2OTBarrelRod(vector<const GeomDet*>& innerDets,
                                      vector<const GeomDet*>& outerDets,
-                                     vector<const GeomDet*>& innerDetBrothers,
-                                     vector<const GeomDet*>& outerDetBrothers)
+                                     const vector<const GeomDet*>& innerDetBrothers,
+                                     const vector<const GeomDet*>& outerDetBrothers)
     : DetRod(true),
       theInnerDets(innerDets),
       theOuterDets(outerDets),

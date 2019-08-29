@@ -452,8 +452,6 @@ HitExtractor::Hits HitExtractorSTRP::hits(const TkTransientTrackingRecHitBuilder
 
       if (skipClusters) cleanedOfClusters(ttrhBuilder, ev,result,false,cleanFrom);
     }
-  }
-  }
   LogDebug("HitExtractorSTRP")<<" giving: "<<result.size()<<" out for charge cut " << minGoodCharge;
   return result;
   

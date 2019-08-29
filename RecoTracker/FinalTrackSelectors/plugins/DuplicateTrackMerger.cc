@@ -489,13 +489,8 @@ namespace {
 
     auto mvaBDTG = forest_->GetClassifier(gbrVals_);
     IfLogTrace(debug_, "DuplicateTrackMerger") << " mvaBDTG " << mvaBDTG;
-<<<<<<< HEAD
     if (mvaBDTG < minBDTG_)
       return false;
-=======
-    IfLogTrace(debug_, "DuplicateTrackMerger") << " minBDTG_" << minBDTG_;
-    if(mvaBDTG < minBDTG_) return false;
->>>>>>> update and trying to fix duplicates
 
     //  std::cout << "to merge " << mvaBDTG << ' ' << std::copysign(std::sqrt(std::abs(deltaR3d2)),deltaR3d2) << ' ' << tmva_dphi_ << ' ' << TSCP1.pt() <<'/'<<TSCP2.pt() << std::endl;
     return true;
@@ -509,21 +504,12 @@ namespace {
       std::swap(nvh1, nvh2);
     }
 
-<<<<<<< HEAD
     IfLogTrace(debug_, "DuplicateTrackMerger")
         << " Checking for overlapping duplicates, cosT " << cosT << " t1 hits " << nvh1;
     if (cosT < overlapCheckMinCosT_)
       return false;
     if (nvh1 > overlapCheckMaxHits_)
       return false;
-=======
-    IfLogTrace(debug_, "DuplicateTrackMerger") << " Checking for overlapping duplicates, cosT " << cosT << " t1 hits " << nvh1;
-    IfLogTrace(debug_, "DuplicateTrackMerger") << " reference number: cosT " << overlapCheckMinCosT_ << " t1 hits " << overlapCheckMaxHits_;
-    if(cosT < overlapCheckMinCosT_) return false;
-    IfLogTrace(debug_, "DuplicateTrackMerger") << " cosT < overlapCheckMinCosT_  ";
-    if(nvh1 > overlapCheckMaxHits_) return false;
-    IfLogTrace(debug_, "DuplicateTrackMerger") << " t1->numberOfValidHits() > overlapCheckMaxHits";
->>>>>>> update and trying to fix duplicates
 
     // find the hit on the longer track on layer of the first hit of the shorter track
     auto findHitOnT2 = [&](const TrackingRecHit *hit1) {

@@ -15,10 +15,10 @@ TkStackMeasurementDet::TkStackMeasurementDet( const StackGeomDet* gdet,
 {}
 
 void TkStackMeasurementDet::init(const MeasurementDet* lowerDet, const MeasurementDet* upperDet) {
-  theInnerDet = dynamic_cast<const TkPhase2OTMeasurementDet*>(lowerDet);
-  theOuterDet = dynamic_cast<const TkPhase2OTMeasurementDet*>(upperDet);
+  theLowerDet = dynamic_cast<const TkPhase2OTMeasurementDet*>(lowerDet);
+  theUpperDet = dynamic_cast<const TkPhase2OTMeasurementDet*>(upperDet);
 
-  if ((theInnerDet == nullptr) || (theOuterDet == nullptr)) {
+  if ((theLowerDet == nullptr) || (theUpperDet == nullptr)) {
     throw MeasurementDetException(
         "TkStackMeasurementDet ERROR: Trying to glue a det which is not a TkPhase2OTMeasurementDet");
   }

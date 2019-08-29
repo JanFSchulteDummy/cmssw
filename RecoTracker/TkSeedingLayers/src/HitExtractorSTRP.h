@@ -78,6 +78,7 @@ namespace ctfseeding {
     bool ringRange(int ring) const;
 
     typedef edm::ContainerMask<edmNew::DetSetVector<SiStripCluster> > SkipClustersCollection;
+    typedef edm::ContainerMask< Phase2TrackerCluster1DCollectionNew > SkipPhase2ClustersCollection;
     void useSkipClusters_(const edm::InputTag& m, edm::ConsumesCollector& iC) override;
 
   private:
@@ -87,6 +88,7 @@ namespace ctfseeding {
     double minAbsZ;
     int theMinRing, theMaxRing;
     edm::EDGetTokenT<SkipClustersCollection> theSkipClusters;
+    edm::EDGetTokenT<SkipPhase2ClustersCollection> theSkipPhase2Clusters;
     edm::EDGetTokenT<SiStripMatchedRecHit2DCollection> theMatchedHits;
     edm::EDGetTokenT<SiStripRecHit2DCollection> theRPhiHits;
     edm::EDGetTokenT<SiStripRecHit2DCollection> theStereoHits;

@@ -14,7 +14,7 @@
 
 class TkStackMeasurementDet GCC11_FINAL : public MeasurementDet {
 public:
-  TkStackMeasurementDet(const StackGeomDet* gdet, const PixelClusterParameterEstimator* cpe);
+  TkStackMeasurementDet(const StackGeomDet* gdet, const VectorHitBuilderEDProducer* matcher, const PixelClusterParameterEstimator* cpe);
   void init(const MeasurementDet* lowerDet, const MeasurementDet* upperDet);
 
   RecHitContainer recHits(const TrajectoryStateOnSurface&, const MeasurementTrackerEvent& data) const override;
@@ -25,22 +25,13 @@ public:
   typedef edmNew::DetSet<Phase2TrackerCluster1D> detset;
   typedef detset::const_iterator const_iterator;
 
-  TkStackMeasurementDet( const StackGeomDet* gdet, const VectorHitBuilderEDProducer* matcher, const PixelClusterParameterEstimator* cpe);
-  void init(const MeasurementDet* lowerDet,
-	    const MeasurementDet* upperDet);
-
   bool measurements(const TrajectoryStateOnSurface& stateOnThisDet,
                     const MeasurementEstimator& est,
                     const MeasurementTrackerEvent& data,
                     TempMeasurements& result) const override;
 
-  const TkPhase2OTMeasurementDet* lowerDet() const { return theInnerDet; }
-  const TkPhase2OTMeasurementDet* upperDet() const { return theOuterDet; }
-  const StackGeomDet& specificGeomDet() const {return static_cast<StackGeomDet const&>(fastGeomDet());}
-
-  bool measurements( const TrajectoryStateOnSurface& stateOnThisDet,
-			     const MeasurementEstimator& est, const MeasurementTrackerEvent & data,
-			     TempMeasurements & result) const override;
+  const TkPhase2OTMeasurementDet* lowerDet() const { return theLowerDet; }
+  const TkPhase2OTMeasurementDet* upperDet() const { return theUpperDet; }
 
 
   /// return TRUE if both lower and upper components are active
@@ -57,8 +48,8 @@ public:
 private:
   const VectorHitBuilderEDProducer* theMatcher;
   const PixelClusterParameterEstimator* thePixelCPE;
-  const TkPhase2OTMeasurementDet* theInnerDet;
-  const TkPhase2OTMeasurementDet* theOuterDet;
+  const TkPhase2OTMeasurementDet* theLowerDet;
+  const TkPhase2OTMeasurementDet* theUpperDet;
 };
 
 #endif

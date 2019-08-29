@@ -28,6 +28,7 @@ public:
 private:
   edm::ESGetToken<TrackerGeometry, TrackerDigiGeometryRecord> geomToken_;
   edm::ESGetToken<TrackerTopology, TrackerTopologyRcd> tTopToken_;
+  bool _usePhase2Stacks;
 };
 
 using namespace edm;
@@ -43,7 +44,7 @@ TrackerRecoGeometryESProducer::TrackerRecoGeometryESProducer(const edm::Paramete
   // See FastSimulation/Configuration/data/ for examples of cfi's.
   c.setConsumes(geomToken_, edm::ESInputTag("", p.getUntrackedParameter<std::string>("trackerGeometryLabel")));
   c.setConsumes(tTopToken_);
-  auto _usePhase2Stacks = p.getParameter<bool>("usePhase2Stacks");
+  _usePhase2Stacks = p.getParameter<bool>("usePhase2Stacks");
 }
 std::unique_ptr<GeometricSearchTracker> TrackerRecoGeometryESProducer::produce(
     const TrackerRecoGeometryRecord &iRecord) {

@@ -13,6 +13,7 @@
 #include "TrackingTools/TrajectoryState/interface/TrajectoryStateTransform.h"
 #include "TrackingTools/MeasurementDet/interface/TrajectoryMeasurementGroup.h"
 
+#include "DataFormats/SiStripDetId/interface/StripSubdetector.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 
 SeedingOTEDProducer::SeedingOTEDProducer(edm::ParameterSet const& conf):

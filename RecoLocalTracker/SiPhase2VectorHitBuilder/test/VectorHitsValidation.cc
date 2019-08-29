@@ -6,6 +6,7 @@
 #include "DataFormats/Phase2TrackerDigi/interface/Phase2TrackerDigi.h"
 #include "MagneticField/Records/interface/IdealMagneticFieldRecord.h"
 #include "RecoLocalTracker/Records/interface/TkPhase2OTCPERecord.h"
+#include "DataFormats/SiStripDetId/interface/StripSubdetector.h"
 
 VectorHitsBuilderValidation::VectorHitsBuilderValidation(const edm::ParameterSet& conf) :
   cpeTag_(conf.getParameter<edm::ESInputTag>("CPE")) 

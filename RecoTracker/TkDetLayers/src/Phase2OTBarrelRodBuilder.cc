@@ -15,6 +15,9 @@ Phase2OTBarrelRod* Phase2OTBarrelRodBuilder::build(const GeometricDet* thePhase2
 
   vector<const GeomDet*> innerGeomDets;
   vector<const GeomDet*> outerGeomDets;
+  vector<const GeomDet*> innerGeomDetBrothers;
+  vector<const GeomDet*> outerGeomDetBrothers;
+
   double meanR = 0;
 
   if(!useBrothers){  
@@ -39,7 +42,7 @@ Phase2OTBarrelRod* Phase2OTBarrelRodBuilder::build(const GeometricDet* thePhase2
     LogDebug("TkDetLayers") << "innerGeomDets.size(): " << innerGeomDets.size() ;
     LogDebug("TkDetLayers") << "outerGeomDets.size(): " << outerGeomDets.size() ;
   
-    return new Phase2OTBarrelRod(innerGeomDets,outerGeomDets);
+    return new Phase2OTBarrelRod(innerGeomDets,outerGeomDets,innerGeomDetBrothers,outerGeomDetBrothers);
 
   } else {
 
@@ -95,6 +98,6 @@ Phase2OTBarrelRod* Phase2OTBarrelRodBuilder::build(const GeometricDet* thePhase2
  
   }
 
-  return new Phase2OTBarrelRod(innerGeomDets,outerGeomDets);
+  return new Phase2OTBarrelRod(innerGeomDets,outerGeomDets,innerGeomDetBrothers,outerGeomDetBrothers);
 
 }

@@ -111,11 +111,6 @@ vector<TrajectoryMeasurement> LayerMeasurements::measurements(const DetLayer& la
   if (!compatDets.empty())
     return get(theDetSystem, theData, layer, compatDets, startingState, prop, est);
 
-  vector<DetWithState>  const & compatDets = layer.compatibleDets( startingState, prop, est);
-  
-  if (compatDets.empty())  LogDebug("LayerMeasurements") << "compatDets is empty" ;
-  if (!compatDets.empty())  return get(theDetSystem, theData, layer, compatDets, startingState, prop, est);
-    
   vector<TrajectoryMeasurement> result;
   pair<bool, TrajectoryStateOnSurface> compat = layer.compatible(startingState, prop, est);
 

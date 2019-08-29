@@ -47,16 +47,6 @@ private:
   edm::ESGetToken<SiPixelQuality, SiPixelQualityRcd> pixelQualityToken_;
   edm::ESGetToken<SiPixelFedCablingMap, SiPixelFedCablingMapRcd> pixelCablingToken_;
   edm::ESGetToken<SiStripQuality, SiStripQualityRcd> stripQualityToken_;
-  //FIXME:: just temporary solution for phase2!
-  phase2matcherName = "";
-  if (p.existsAs<std::string>("Phase2HitMatcher")) {
-    phase2matcherName = p.getParameter<std::string>("Phase2HitMatcher");
-  }
-
-  phase2TrackerCPEName = "";
-  if (p.existsAs<std::string>("Phase2StripCPE")) {
-    phase2TrackerCPEName = p.getParameter<std::string>("Phase2StripCPE");
-  }
 
   edm::ESGetToken<PixelClusterParameterEstimator, TkPixelCPERecord> pixelCPEToken_;
   edm::ESGetToken<StripClusterParameterEstimator, TkStripCPERecord> stripCPEToken_;
@@ -65,6 +55,7 @@ private:
   edm::ESGetToken<TrackerGeometry, TrackerDigiGeometryRecord> trackerGeomToken_;
   edm::ESGetToken<GeometricSearchTracker, TrackerRecoGeometryRecord> geometricSearchTrackerToken_;
   edm::ESGetToken<ClusterParameterEstimator<Phase2TrackerCluster1D>, TkStripCPERecord> phase2TrackerCPEToken_;
+  edm::ESGetToken<VectorHitBuilderEDProducer, TkPhase2OTCPERecord> phase2matcherToken_;
 
   MeasurementTrackerImpl::BadStripCutsDet badStripCuts_;
 
@@ -166,9 +157,11 @@ MeasurementTrackerESProducer::MeasurementTrackerESProducer(const edm::ParameterS
 
   //FIXME:: just temporary solution for phase2!
   auto phase2 = p.getParameter<std::string>("Phase2StripCPE");
+  auto phase2Matcher = p.getParameter<std::string>("Phase2HitMatcher");
   if (not phase2.empty()) {
     usePhase2_ = true;
     c.setConsumes(phase2TrackerCPEToken_, edm::ESInputTag("", phase2));
+    c.setConsumes(phase2matcherToken_, edm::ESInputTag("", phase2Matcher));
   }
 }
 
@@ -190,59 +183,30 @@ std::unique_ptr<MeasurementTracker> MeasurementTrackerESProducer::produce(const 
     ptr_stripQuality = &iRecord.get(stripQualityToken_);
   }
   
-  edm::ESHandle<PixelClusterParameterEstimator> pixelCPE;
-  edm::ESHandle<StripClusterParameterEstimator> stripCPE;
-  edm::ESHandle<SiStripRecHitMatcher>           hitMatcher;
-  edm::ESHandle<VectorHitBuilderEDProducer>     ph2hitMatcher;
-  edm::ESHandle<TrackerTopology>                trackerTopology;
-  edm::ESHandle<TrackerGeometry>                trackerGeom;
-  edm::ESHandle<GeometricSearchTracker>         geometricSearchTracker;
-  edm::ESHandle<ClusterParameterEstimator<Phase2TrackerCluster1D> > phase2TrackerCPE;
-  
-  iRecord.getRecord<TkPixelCPERecord>().get(pixelCPEName,pixelCPE);
-  iRecord.getRecord<TkStripCPERecord>().get(stripCPEName,stripCPE);
-  iRecord.getRecord<TkStripCPERecord>().get(matcherName,hitMatcher);
-  iRecord.getRecord<TkPhase2OTCPERecord>().get(phase2matcherName,ph2hitMatcher);
-  iRecord.getRecord<TrackerTopologyRcd>().get(trackerTopology);
-  iRecord.getRecord<TrackerDigiGeometryRecord>().get(trackerGeom);
-  iRecord.getRecord<TrackerRecoGeometryRecord>().get(geometricSearchTracker);
+  const ClusterParameterEstimator<Phase2TrackerCluster1D> *ptr_phase2TrackerCPE = nullptr;
+  const VectorHitBuilderEDProducer *ptr_phase2Matcher = nullptr;
 
-
-  if(phase2TrackerCPEName != ""){
-      iRecord.getRecord<TkPhase2OTCPERecord>().get(phase2TrackerCPEName,phase2TrackerCPE);
-      return             std::make_unique<MeasurementTrackerImpl>(pset_,
-							          pixelCPE.product(),
-							          stripCPE.product(),
-							          hitMatcher.product(),
-							          ph2hitMatcher.product(),
-							          trackerTopology.product(),
-							          trackerGeom.product(),
-							          geometricSearchTracker.product(),
-							          ptr_stripQuality,
-                                                                  stripQualityFlags,
-                                                                  stripQualityDebugFlags,
-							          ptr_pixelQuality,
-							          ptr_pixelCabling,
-                                                                  pixelQualityFlags,
-                                                                  pixelQualityDebugFlags,
-							          phase2TrackerCPE.product());
-  } else {
-      return             std::make_unique<MeasurementTrackerImpl>(pset_,
-							          pixelCPE.product(),
-							          stripCPE.product(),
-							          hitMatcher.product(),
-							          ph2hitMatcher.product(),
-							          trackerTopology.product(),
-							          trackerGeom.product(),
-							          geometricSearchTracker.product(),
-							          ptr_stripQuality,
-                                                                  stripQualityFlags,
-                                                                  stripQualityDebugFlags,
-							          ptr_pixelQuality,
-                                                                  ptr_pixelCabling,
-                                                                  pixelQualityFlags,
-                                                                  pixelQualityDebugFlags);
+  if (usePhase2_) {
+    ptr_phase2TrackerCPE = &iRecord.get(phase2TrackerCPEToken_);
+    ptr_phase2Matcher = &iRecord.get(phase2matcherToken_);
   }
+
+  return std::make_unique<MeasurementTrackerImpl>(badStripCuts_,
+                                                  &iRecord.get(pixelCPEToken_),
+                                                  &iRecord.get(stripCPEToken_),
+                                                  &iRecord.get(hitMatcherToken_),
+                                                  ptr_phase2Matcher,
+                                                  &iRecord.get(trackerTopologyToken_),
+                                                  &iRecord.get(trackerGeomToken_),
+                                                  &iRecord.get(geometricSearchTrackerToken_),
+					          ptr_stripQuality,
+                                                  stripQualityFlags_,
+                                                  stripQualityDebugFlags_,
+						  ptr_pixelQuality,
+					          ptr_pixelCabling,
+                                                  pixelQualityFlags_,
+                                                  pixelQualityDebugFlags_,
+			                          ptr_phase2TrackerCPE);
 } 
 void MeasurementTrackerESProducer::fillDescriptions(edm::ConfigurationDescriptions &descriptions) {
   edm::ParameterSetDescription desc;
