@@ -54,8 +54,6 @@ Phase2OTBarrelLayer* Phase2OTBarrelLayerBuilder::build(const GeometricDet* aPhas
       theOuterRods.push_back(myPhase2OTBarrelRodBuilder.build(theGeometricDetRods[index],
 							      theGeomDetGeometry, useBrothers) );
 
-    if (theGeometricDetRods[index]->positionBounds().perp() > meanR)
-      theOuterRods.push_back(myPhase2OTBarrelRodBuilder.build(theGeometricDetRods[index], theGeomDetGeometry));
   }
 
   if (theGeometricDetRings.empty())
