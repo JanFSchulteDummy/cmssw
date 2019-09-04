@@ -245,7 +245,7 @@ reco::SimToRecoCollection QuickTrackAssociatorByHitsImpl::associateSimToRecoImpl
 
   size_t collectionSize = ::collectionSize(trackCollection);  // Delegate away type specific part
 
-  for(size_t i = 0; i<collectionSize; ++i) {
+  for(size_t i = 0; i < collectionSize; ++i) {
     const reco::Track* pTrack = ::getTrackAt(
         trackCollection, i);  // Get a normal pointer for ease of use. This part is type specific so delegate.
 
@@ -259,19 +259,19 @@ reco::SimToRecoCollection QuickTrackAssociatorByHitsImpl::associateSimToRecoImpl
 
     // int nt = 0;
     for(auto iTrackingParticleQualityPair = trackingParticleQualityPairs.begin();
-         iTrackingParticleQualityPair! = trackingParticleQualityPairs.end();
+         iTrackingParticleQualityPair != trackingParticleQualityPairs.end();
          ++iTrackingParticleQualityPair) {
       const edm::Ref<TrackingParticleCollection>& trackingParticleRef = iTrackingParticleQualityPair->first;
       double numberOfSharedClusters = iTrackingParticleQualityPair->second;
       double numberOfValidTrackClusters = weightedNumberOfTrackClusters(*pTrack, hitOrClusterAssociator);
-      size_t numberOfSimulatedHits = 0; // Set a few lines below, but only if required.
+      size_t numberOfSimulatedHits = 0;  // Set a few lines below, but only if required.
 
-      if(numberOfSharedClusters == 0.0) 
+      if (numberOfSharedClusters == 0.0) 
         continue; // No point in continuing if there was no association
 
-      if(simToRecoDenominator_ == denomsim ||
+      if (simToRecoDenominator_ == denomsim ||
           (numberOfSharedClusters < 3.0 &&
-           threeHitTracksAreSpecial_)) // the numberOfSimulatedHits is not always required, so can skip counting in some circumstances
+           threeHitTracksAreSpecial_))  // the numberOfSimulatedHits is not always required, so can skip counting in some circumstances
       {
         // Note that in the standard TrackAssociatorByHits, all of the hits in associatedTrackingParticleHits are checked for
         // various things.  I'm not sure what these checks are for but they depend on the UseGrouping and UseSplitting settings.
@@ -289,20 +289,20 @@ reco::SimToRecoCollection QuickTrackAssociatorByHitsImpl::associateSimToRecoImpl
 
       double purity = numberOfSharedClusters / numberOfValidTrackClusters;
       double quality;
-      if(absoluteNumberOfHits_)
+      if (absoluteNumberOfHits_)
         quality = numberOfSharedClusters;
-      else if(simToRecoDenominator_ == denomsim && numberOfSimulatedHits != 0) 
-	quality = numberOfSharedClusters / static_cast<double>(numberOfSimulatedHits);
-      else if(simToRecoDenominator_ == denomreco && numberOfValidTrackClusters != 0) 
-	quality = purity;
+      else if (simToRecoDenominator_ == denomsim && numberOfSimulatedHits != 0) 
+        quality = numberOfSharedClusters / static_cast<double>(numberOfSimulatedHits);
+      else if (simToRecoDenominator_ == denomreco && numberOfValidTrackClusters != 0) 
+        quality = purity;
       else
-	quality = 0;
+        quality = 0;
 
       if (quality > qualitySimToReco_ &&
-          !(threeHitTracksAreSpecial_ && numberOfSimulatedHits ==3 && numberOfSharedClusters < 3.0) &&
-	  (absoluteNumberOfHits_ || (purity > puritySimToReco_))) {
+          !(threeHitTracksAreSpecial_ && numberOfSimulatedHits == 3 && numberOfSharedClusters < 3.0) &&
+          (absoluteNumberOfHits_ || (purity > puritySimToReco_))) {
         // Getting the RefToBase is dependent on the type of trackCollection, so delegate that to an overload.
-	returnValue.insert(trackingParticleRef, std::make_pair(::getRefToTrackAt(trackCollection,i), quality));
+        returnValue.insert(trackingParticleRef, std::make_pair(::getRefToTrackAt(trackCollection, i), quality));
       }
     }
   }
@@ -772,7 +772,7 @@ double QuickTrackAssociatorByHitsImpl::weightedNumberOfTrackClusters(const Traje
   for (auto iHit = seed.recHits().first; iHit != seed.recHits().second; ++iHit) {
     const auto subdetId = track_associator::getHitFromIter(iHit)->geographicalId().subdetId();
     const double weight = (subdetId == PixelSubdetector::PixelBarrel || subdetId == PixelSubdetector::PixelEndcap)
-                              ?  pixelHitWeight_
+                              ? pixelHitWeight_
                               : 1.0;
     sum += weight;
   }

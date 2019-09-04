@@ -51,11 +51,11 @@ namespace {
     for (auto const& ds : compatDets) {
       MeasurementDetWithData mdet = theDetSystem->idToDet(ds.first->geographicalId(), *theData);
       if 
-	UNLIKELY(mdet.isNull()) { throw MeasurementDetException( "MeasurementDet not found"); }
+        UNLIKELY(mdet.isNull()) { throw MeasurementDetException("MeasurementDet not found"); }
       
-      if (mdet.measurements(ds.second, est,tmps))
-	for (std::size_t i=0; i!=tmps.size(); ++i)
-	  result.emplace_back(ds.second,std::move(tmps.hits[i]),tmps.distances[i],&layer);
+      if (mdet.measurements(ds.second, est, tmps))
+        for (std::size_t i = 0; i != tmps.size(); ++i)
+          result.emplace_back(ds.second, std::move(tmps.hits[i]), tmps.distances[i], &layer);
       tmps.clear();
     }
     // WARNING: we might end up with more than one invalid hit of type 'inactive' in result
