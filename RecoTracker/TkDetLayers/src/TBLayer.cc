@@ -62,6 +62,7 @@ SubLayerCrossings TBLayer::computeCrossings(const TrajectoryStateOnSurface& star
   GlobalPoint gInnerPoint(innerCrossing.position());
   GlobalPoint gOuterPoint(outerCrossing.position());
 
+
   int innerIndex, outerIndex;
   bool inLess;
   std::tie(inLess, innerIndex, outerIndex) = computeIndexes(gInnerPoint, gOuterPoint);

@@ -77,6 +77,7 @@ Phase2OTtiltedBarrelLayer::~Phase2OTtiltedBarrelLayer() {
   }
 }
 
+
 void Phase2OTtiltedBarrelLayer::groupedCompatibleDetsV(const TrajectoryStateOnSurface& tsos,
                                                        const Propagator& prop,
                                                        const MeasurementEstimator& est,
