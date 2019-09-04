@@ -12,7 +12,7 @@
 
 class OmniClusterRef;
 
-class BaseTrackerRecHit : public TrackingRecHit { 
+class BaseTrackerRecHit : public TrackingRecHit {
 public:
   BaseTrackerRecHit() : qualWord_(0) {}
 
@@ -51,25 +51,23 @@ public:
 
   bool hasPositionAndError() const override;
 
-  virtual LocalPoint localPosition() const override{ 
+  LocalPoint localPosition() const override{ 
     check();
     return pos_;
   }
 
-  virtual LocalError localPositionError() const override{
+  LocalError localPositionError() const override{
     check();
     return err_;
   }
- 
-  const LocalPoint & localPositionFast() const {
+  const LocalPoint& localPositionFast() const {
     check();
     return pos_;
   }
-  const LocalError & localPositionErrorFast() const {
+  const LocalError& localPositionErrorFast() const {
     check();
     return err_;
   }
-
 
   // to be specialized for 1D and 2D
   void getKfComponents(KfComponentsHolder& holder) const override = 0;
