@@ -233,8 +233,11 @@ reco::RecoToSimCollection QuickTrackAssociatorByHitsImpl::associateRecoToSimImpl
 
 
 template<class T_TrackCollection, class T_TrackingParticleCollection, class T_hitOrClusterAssociator>
-reco::SimToRecoCollection QuickTrackAssociatorByHitsImpl::associateSimToRecoImplementation( const T_TrackCollection& trackCollection, const T_TrackingParticleCollection& trackingParticleCollection, const TrackingParticleRefKeySet *trackingParticleKeys, T_hitOrClusterAssociator hitOrClusterAssociator ) const
-{
+reco::SimToRecoCollection QuickTrackAssociatorByHitsImpl::associateSimToRecoImplementation( 
+	 const T_TrackCollection& trackCollection,
+	 const T_TrackingParticleCollection& trackingParticleCollection,
+	 const TrackingParticleRefKeySet *trackingParticleKeys,
+	 T_hitOrClusterAssociator hitOrClusterAssociator ) const {
 	reco::SimToRecoCollection returnValue(productGetter_);
         if(::collectionSize(trackingParticleCollection) == 0)
           return returnValue;

@@ -21,4 +21,3 @@ class TransientRecHitRecord
 									       TkPhase2OTCPERecord,
                                                                                GlobalTrackingGeometryRecord> > {};
 #endif
-

@@ -50,13 +50,11 @@ namespace {
 
     for (auto const& ds : compatDets) {
       MeasurementDetWithData mdet = theDetSystem->idToDet(ds.first->geographicalId(), *theData);
-      LogDebug("LayerMeasurements") << "get >> detId of compatible Det:" << ds.first->geographicalId() ;
       if UNLIKELY(mdet.isNull()) {
 	throw MeasurementDetException( "MeasurementDet not found");
       }
       
       if (mdet.measurements(ds.second, est,tmps)){
-        LogDebug("LayerMeasurements") << "#tmps:" << tmps.size() ;
 	for (std::size_t i=0; i!=tmps.size(); ++i)
 	  result.emplace_back(ds.second,std::move(tmps.hits[i]),tmps.distances[i],&layer);
       }
@@ -64,7 +62,6 @@ namespace {
     }
     // WARNING: we might end up with more than one invalid hit of type 'inactive' in result
     // to be fixed in order to avoid usless double traj candidates.
-    LogDebug("LayerMeasurements") << "get >> result size:" << result.size() ;
     // sort the final result
     if (result.size() > 1) {
       sort(result.begin(), result.end(), TrajMeasLessEstim());
@@ -144,7 +141,6 @@ vector<TrajectoryMeasurementGroup> LayerMeasurements::groupedMeasurements(const 
     vector<TrajectoryMeasurement> tmpVec;
     for (auto const& det : grp) {
       MeasurementDetWithData mdet = theDetSystem->idToDet(det.det()->geographicalId(), *theData);
-      LogDebug("LayerMeasurements") << "groupedMeasurements >> detId of compatible Det:" << det.det()->geographicalId() ;
       if (mdet.isNull()) {
         throw MeasurementDetException("MeasurementDet not found");
       }
