@@ -12,7 +12,6 @@
 
 class OmniClusterRef;
 
-
 class BaseTrackerRecHit : public TrackingRecHit { 
 public:
   BaseTrackerRecHit() : qualWord_(0) {}
@@ -24,7 +23,7 @@ public:
 
   // no position (as in persistent)
   BaseTrackerRecHit(DetId id, trackerHitRTTI::RTTI rt) : TrackingRecHit(id, (unsigned int)(rt)), qualWord_(0) {}
- BaseTrackerRecHit(const GeomDet & idet, trackerHitRTTI::RTTI rt) :  TrackingRecHit(idet,(unsigned int)(rt)),qualWord_(0) {}
+  BaseTrackerRecHit(const GeomDet & idet, trackerHitRTTI::RTTI rt) :  TrackingRecHit(idet,(unsigned int)(rt)),qualWord_(0) {}
 
   BaseTrackerRecHit(const LocalPoint& p, const LocalError& e, GeomDet const& idet, trackerHitRTTI::RTTI rt)
       : TrackingRecHit(idet, (unsigned int)(rt)), pos_(p), err_(e), qualWord_(0) {
@@ -48,16 +47,28 @@ public:
   virtual OmniClusterRef const& firstClusterRef() const = 0;
 
   // verify that hits can share clusters...
-  inline bool sameDetModule(TrackingRecHit const & hit) const;
+  inline bool sameDetModule(TrackingRecHit const& hit) const;
 
-  bool hasPositionAndError() const ; 
+  bool hasPositionAndError() const override;
 
-  virtual LocalPoint localPosition() const   { check(); return pos_;}
+  virtual LocalPoint localPosition() const override{ 
+    check();
+    return pos_;
+  }
 
-  virtual LocalError localPositionError() const   { check(); return err_;}
+  virtual LocalError localPositionError() const override{
+    check();
+    return err_;
+  }
  
-  const LocalPoint & localPositionFast()      const { check(); return pos_; }
-  const LocalError & localPositionErrorFast() const { check(); return err_; }
+  const LocalPoint & localPositionFast() const {
+    check();
+    return pos_;
+  }
+  const LocalError & localPositionErrorFast() const {
+    check();
+    return err_;
+  }
 
 
   // to be specialized for 1D and 2D
