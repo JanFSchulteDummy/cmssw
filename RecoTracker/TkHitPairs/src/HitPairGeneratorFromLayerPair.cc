@@ -155,7 +155,6 @@ void HitPairGeneratorFromLayerPair::doublets(const TrackingRegion& region,
       if (e == b)
         continue;
       bool ok[e - b];
-
       switch (checkRZ->algo()) {
         case (HitRZCompatibility::zAlgo):
           std::get<0>(kernels).set(checkRZ);

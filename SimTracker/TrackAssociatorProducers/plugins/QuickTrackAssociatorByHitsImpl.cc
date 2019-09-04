@@ -267,7 +267,7 @@ reco::SimToRecoCollection QuickTrackAssociatorByHitsImpl::associateSimToRecoImpl
       size_t numberOfSimulatedHits = 0;  // Set a few lines below, but only if required.
 
       if (numberOfSharedClusters == 0.0)
-        continue; // No point in continuing if there was no association
+        continue;  // No point in continuing if there was no association
 
       if (simToRecoDenominator_ == denomsim ||
           (numberOfSharedClusters < 3.0 &&

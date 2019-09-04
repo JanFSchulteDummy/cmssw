@@ -183,7 +183,7 @@ std::unique_ptr<MeasurementTracker> MeasurementTrackerESProducer::produce(const 
   if (stripQualityFlags_ != 0) {
     ptr_stripQuality = &iRecord.get(stripQualityToken_);
   }
- 
+
   const ClusterParameterEstimator<Phase2TrackerCluster1D> *ptr_phase2TrackerCPE = nullptr;
   const VectorHitBuilderEDProducer *ptr_phase2Matcher = nullptr;
   if (usePhase2_) {
@@ -205,7 +205,7 @@ std::unique_ptr<MeasurementTracker> MeasurementTrackerESProducer::produce(const 
                                                   ptr_pixelCabling,
                                                   pixelQualityFlags_,
                                                   pixelQualityDebugFlags_,
-			                          ptr_phase2TrackerCPE);
+                                                  ptr_phase2TrackerCPE);
 }
 
 void MeasurementTrackerESProducer::fillDescriptions(edm::ConfigurationDescriptions &descriptions) {

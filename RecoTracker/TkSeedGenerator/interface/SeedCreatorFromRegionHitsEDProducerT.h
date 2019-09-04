@@ -86,7 +86,7 @@ void SeedCreatorFromRegionHitsEDProducerT<T_SeedCreator>::produce(edm::Event& iE
       // used in triplet and quadruplet generators, as well as inside
       // seedCreator.
       if (!comparitor_ || comparitor_->compatible(hits)) {
-             seedCreator_.makeSeed(*seeds, hits);
+        seedCreator_.makeSeed(*seeds, hits);
       }
     }
   }
