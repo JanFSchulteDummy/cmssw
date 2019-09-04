@@ -50,8 +50,8 @@ namespace {
 
     for (auto const& ds : compatDets) {
       MeasurementDetWithData mdet = theDetSystem->idToDet(ds.first->geographicalId(), *theData);
-      if UNLIKELY(mdet.isNull()) {
-	throw MeasurementDetException( "MeasurementDet not found");
+      if 
+	UNLIKELY(mdet.isNull()) { throw MeasurementDetException( "MeasurementDet not found");
       }
       
       if (mdet.measurements(ds.second, est,tmps)){
@@ -62,6 +62,7 @@ namespace {
     }
     // WARNING: we might end up with more than one invalid hit of type 'inactive' in result
     // to be fixed in order to avoid usless double traj candidates.
+
     // sort the final result
     if (result.size() > 1) {
       sort(result.begin(), result.end(), TrajMeasLessEstim());
