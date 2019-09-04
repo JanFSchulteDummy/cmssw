@@ -101,6 +101,7 @@ HitDoublets HitPairGeneratorFromLayerPair::doublets(const TrackingRegion& region
   result.reserve(std::max(innerHitsMap.size(), outerHitsMap.size()));
   doublets(
       region, *innerLayer.detLayer(), *outerLayer.detLayer(), innerHitsMap, outerHitsMap, iSetup, theMaxElement, result);
+
   return result;
 }
 
@@ -116,7 +117,7 @@ void HitPairGeneratorFromLayerPair::doublets(const TrackingRegion& region,
   typedef RecHitsSortedInPhi::Hit Hit;
   InnerDeltaPhi deltaPhi(outerHitDetLayer, innerHitDetLayer, region, iSetup);
 
-  LogDebug("HitPairGeneratorFromLayerPair") << "layers " << innerHitDetLayer.seqNum()  << " " << outerHitDetLayer.seqNum() << std::endl;
+  // std::cout << "layers " << theInnerLayer.detLayer()->seqNum()  << " " << outerLayer.detLayer()->seqNum() << std::endl;
 
   // constexpr float nSigmaRZ = std::sqrt(12.f);
   constexpr float nSigmaPhi = 3.f;

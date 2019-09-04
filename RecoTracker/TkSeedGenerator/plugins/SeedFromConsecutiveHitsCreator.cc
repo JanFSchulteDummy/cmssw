@@ -61,6 +61,7 @@ void SeedFromConsecutiveHitsCreator::init(const TrackingRegion& iregion,
 void SeedFromConsecutiveHitsCreator::makeSeed(TrajectorySeedCollection& seedCollection, const SeedingHitSet& hits) {
   if (hits.size() < 2)
     return;
+
   GlobalTrajectoryParameters kine;
   if (!initialKinematic(kine, hits))
     return;

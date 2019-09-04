@@ -63,14 +63,12 @@ bool TkPixelMeasurementDet::measurements(const TrajectoryStateOnSurface& stateOn
   // create a TrajectoryMeasurement with an invalid RecHit and zero estimate
   bool inac = hasBadComponents(stateOnThisDet, data);
   result.add(inac ? theInactiveHit : theMissingHit, 0.F);
-  LogDebug("MeasurementTracker")<< "adding missing hit";
   return inac;
 }
 
 TrackingRecHit::RecHitPointer TkPixelMeasurementDet::buildRecHit(const SiPixelClusterRef& cluster,
                                                                  const LocalTrajectoryParameters& ltp) const {
   const GeomDetUnit& gdu(specificGeomDet());
-  LogTrace("MeasurementTracker")<< "Build rechit" ;
 
   auto&& params = cpe()->getParameters(*cluster, gdu, ltp);
   return std::make_shared<SiPixelRecHit>(
@@ -98,7 +96,6 @@ TkPixelMeasurementDet::RecHitContainer TkPixelMeasurementDet::compHits(const Tra
     begin = &(data.pixelData().handle()->data().front());
   }
   const detset& detSet = data.pixelData().detSet(index());
-
   result.reserve(detSet.size());
 
   // pixel topology is rectangular, all positions are independent

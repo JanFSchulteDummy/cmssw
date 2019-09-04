@@ -245,7 +245,7 @@ reco::SimToRecoCollection QuickTrackAssociatorByHitsImpl::associateSimToRecoImpl
 
   size_t collectionSize = ::collectionSize(trackCollection);  // Delegate away type specific part
 
-  for(size_t i = 0; i < collectionSize; ++i) {
+  for (size_t i = 0; i < collectionSize; ++i) {
     const reco::Track* pTrack = ::getTrackAt(
         trackCollection, i);  // Get a normal pointer for ease of use. This part is type specific so delegate.
 
@@ -258,7 +258,7 @@ reco::SimToRecoCollection QuickTrackAssociatorByHitsImpl::associateSimToRecoImpl
                        pTrack->recHitsEnd());
 
     // int nt = 0;
-    for(auto iTrackingParticleQualityPair = trackingParticleQualityPairs.begin();
+    for (auto iTrackingParticleQualityPair = trackingParticleQualityPairs.begin();
          iTrackingParticleQualityPair != trackingParticleQualityPairs.end();
          ++iTrackingParticleQualityPair) {
       const edm::Ref<TrackingParticleCollection>& trackingParticleRef = iTrackingParticleQualityPair->first;
@@ -266,7 +266,7 @@ reco::SimToRecoCollection QuickTrackAssociatorByHitsImpl::associateSimToRecoImpl
       double numberOfValidTrackClusters = weightedNumberOfTrackClusters(*pTrack, hitOrClusterAssociator);
       size_t numberOfSimulatedHits = 0;  // Set a few lines below, but only if required.
 
-      if (numberOfSharedClusters == 0.0) 
+      if (numberOfSharedClusters == 0.0)
         continue; // No point in continuing if there was no association
 
       if (simToRecoDenominator_ == denomsim ||
@@ -291,9 +291,9 @@ reco::SimToRecoCollection QuickTrackAssociatorByHitsImpl::associateSimToRecoImpl
       double quality;
       if (absoluteNumberOfHits_)
         quality = numberOfSharedClusters;
-      else if (simToRecoDenominator_ == denomsim && numberOfSimulatedHits != 0) 
+      else if (simToRecoDenominator_ == denomsim && numberOfSimulatedHits != 0)
         quality = numberOfSharedClusters / static_cast<double>(numberOfSimulatedHits);
-      else if (simToRecoDenominator_ == denomreco && numberOfValidTrackClusters != 0) 
+      else if (simToRecoDenominator_ == denomreco && numberOfValidTrackClusters != 0)
         quality = purity;
       else
         quality = 0;
