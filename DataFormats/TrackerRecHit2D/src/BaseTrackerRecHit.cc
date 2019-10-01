@@ -72,7 +72,6 @@ void BaseTrackerRecHit::getKfComponents2D(KfComponentsHolder &holder) const {
   holder.measuredParams<2>() = AlgebraicVector2(&holder.tsosLocalParameters().At(3), 2);
   holder.measuredErrors<2>() = holder.tsosLocalErrors().Sub<AlgebraicSymMatrix22>(3, 3);
 }
-
 // obsolete (for what tracker is concerned...) interface
 AlgebraicVector BaseTrackerRecHit::parameters() const {
   obsolete();
